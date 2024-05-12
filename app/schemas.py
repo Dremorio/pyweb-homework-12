@@ -21,6 +21,33 @@ class ContactUpdate(ContactBase):
 class Contact(ContactBase):
     id: int
     additional_data: str | None = None
+    owner_id: int
 
     class Config:
         orm_mode = True
+
+
+class UserBase(BaseModel):
+    email: EmailStr
+
+
+class UserCreate(UserBase):
+    password: str = Field(..., min_length=8)
+
+
+class User(UserBase):
+    id: int
+    is_active: bool = True
+
+    class Config:
+        orm_mode = True
+
+
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    id: int | None = None
